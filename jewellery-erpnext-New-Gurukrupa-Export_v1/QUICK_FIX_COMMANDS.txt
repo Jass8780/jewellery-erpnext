@@ -1,0 +1,104 @@
+===========================================
+QUICK FIX COMMANDS FOR FRAPPE SITE
+===========================================
+
+PROBLEM: Site not found at http://127.0.0.1:8000
+
+SOLUTION STEPS:
+===========================================
+
+1. OPEN FRAPPE BENCH TERMINAL
+   Navigate to your bench directory:
+   cd C:\Users\ASUS\frappe-bench
+   (or wherever your bench is located)
+
+2. CHECK IF SITE EXISTS
+   bench --site all list-apps
+   
+   OR check sites folder:
+   dir sites
+
+3. IF SITE DOESN'T EXIST - CREATE IT
+   bench new-site site1.local
+   
+   During creation:
+   - Enter MySQL root password
+   - Enter Administrator password
+   - Select apps: jewellery_erpnext, erpnext (if needed)
+
+4. INSTALL APP ON SITE
+   bench --site site1.local install-app jewellery_erpnext
+
+5. RUN MIGRATIONS (IMPORTANT!)
+   bench --site site1.local migrate
+   
+   This will:
+   - Apply database changes
+   - Run patches (including add_department_ir_indexes)
+   - Update all doctypes
+
+6. BUILD ASSETS
+   bench --site site1.local build
+
+7. START SERVER
+   bench start
+   
+   Server will start on: http://127.0.0.1:8000
+
+8. ACCESS SITE
+   Open browser: http://127.0.0.1:8000
+   Login: Administrator / [your-password]
+
+===========================================
+TROUBLESHOOTING:
+===========================================
+
+If "site not found" error persists:
+
+A. CHECK SITE CONFIG
+   cat sites\site1.local\site_config.json
+   (or open in notepad)
+
+B. CLEAR CACHE
+   bench --site site1.local clear-cache
+
+C. CHECK MYSQL IS RUNNING
+   - Open Services (services.msc)
+   - Look for MySQL or MariaDB
+   - Make sure it's Running
+
+D. CHECK PORT 8000
+   netstat -ano | findstr :8000
+   If port is in use, kill the process:
+   taskkill /PID [PID_NUMBER] /F
+
+E. CHECK ERROR LOGS
+   bench --site site1.local logs
+   bench --site site1.local logs --error
+
+===========================================
+QUICK COPY-PASTE COMMANDS:
+===========================================
+
+# Navigate to bench (adjust path as needed)
+cd C:\Users\ASUS\frappe-bench
+
+# Create site (if needed)
+bench new-site site1.local
+
+# Install app
+bench --site site1.local install-app jewellery_erpnext
+
+# Run migrations
+bench --site site1.local migrate
+
+# Build assets
+bench --site site1.local build
+
+# Start server
+bench start
+
+===========================================
+NOTE: Replace "site1.local" with your actual site name
+===========================================
+
