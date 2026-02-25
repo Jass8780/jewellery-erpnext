@@ -737,7 +737,7 @@ def create_quotation_bom(self, row, bom, attribute_data, metal_criteria, item_bo
 						""",
 						(doc.customer, diamond_price_list_customer, diamond.size_in_mm),
 						as_dict=True
-					)
+					) 
 					if size_in_mm_diamond_price_list_entry:
 						latest_entry = size_in_mm_diamond_price_list_entry[0]  # Get the first entry
 						diamond.total_diamond_rate = latest_entry.get("rate", 0)
